@@ -1,0 +1,15 @@
+{
+  "name": "chat-room",
+  "version": "0.0.0",
+  "description": "ChatRoom",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "io": "^1.0.0",
+    "passport": "^0.4.1",
+    "socket.io": "^2.3.0"
+  }
+}
