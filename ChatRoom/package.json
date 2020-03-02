@@ -1,10 +1,10 @@
 {
   "name": "chat-room",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "ChatRoom",
   "main": "server.js",
   "author": {
-    "name": ""
+    "name": "Jordan Nordh"
   },
   "dependencies": {
     "express": "^4.17.1",
