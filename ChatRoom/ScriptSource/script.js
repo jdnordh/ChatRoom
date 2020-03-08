@@ -1,6 +1,7 @@
 
+var g_username = "";
 
-$(function () {
+$(function() {
 	var socket = io();
 
 	var submit = () => {
@@ -8,27 +9,41 @@ $(function () {
 		if (!text) {
 			return false;
 		}
-		socket.emit("chatMessage", $("#message").val());
+		var message = { text: text, username: g_username };
+		socket.emit("chatMessage", message);
 		$("#message").val("");
 		return false;
 	};
-	/*
-	$("form").submit((e) => {
-		e.preventDefault(); // prevents page reloading
-		return submit();
-		
-		socket.emit("chat message", $("#message").val());
-		$("#message").val("");
-		return false;
-		
-	});
-	*/
 
-	socket.on("chatMessage", (msg) => {
-		$("#messagelog").append($("<li>").text(msg));
+	socket.on("chatMessage",
+		(msg) => {
+			if (msg.username === g_username) {
+				msg.text = "<b>" + msg.text + "</b>";
+			}
+			$("#messagelog").append($("<li>").html(msg.text));
+		});
+
+	socket.on("usernameResponse",
+		(username) => {
+			g_username = username;
+			$("#username").text("You are " + username);
+		});
+
+	socket.on("userListUpdate",
+		(users) => {
+			$("#userlog").empty();
+			for (var i = 0; i < users.length; ++i) {
+				$("#userlog").append($("<li>").html(users[i]));
+			}
+		});
+
+	socket.on("chatLogUpdate", (chatLogs) =>
+	{
+
 	});
 
-	
+	socket.emit("usernameRequest", g_username);
+
 	$("#message").keypress(
 		(e) => {
 			if (e.keyCode === 13) {

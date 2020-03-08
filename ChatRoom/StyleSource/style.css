@@ -23,7 +23,7 @@ body {
 ul {
 	padding: 0;
 	margin: 0;
-
+	list-style-type: none;
 }
 
 .heading {
@@ -36,6 +36,16 @@ ul {
 .text-log {
 	border-radius: 5px;
 	border: #222 1px solid;
+	max-width: 100%;
+}
+
+.text-log li {
+	word-wrap: break-word;
+	padding: 5px 10px;
+}
+
+.text-log li:nth-child(odd) {
+	background: #eee;
 }
 
 #message {
@@ -48,16 +58,7 @@ ul {
 #send {
 	border-radius: 5px;
 	border: #222 1px solid;
-	width: 20%;
 	height: 100%;
-}
-
-#messagelog li {
-	padding: 5px 10px;
-}
-
-#messagelog li:nth-child(odd) {
-	background: #eee;
 }
 
 .grid-base {
