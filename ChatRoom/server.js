@@ -3,6 +3,8 @@
 var app = require("express")();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
+var cookieParser = require("cookie-parser");
+app.use(cookieParser);
 
 var htmlSourceDir = "/HtmlSource";
 var scriptSourceDir = "/ScriptSource";
@@ -10,6 +12,10 @@ var styleSourceDir = "/StyleSource";
 
 app.get("/",
 	(req, res) => {
+		// Do cookies here
+		//var requestedUsername = req.cookies["username"];
+
+		//res.cookie("username", "name");
 		res.sendFile(__dirname + htmlSourceDir + "/app.html");
 	});
 
@@ -131,7 +137,7 @@ io.on("connection", (socket) => {
 				msg.timeSent = getCurrentTime();
 				msg.text = formatMessage(msg.username, userDictionary[msg.username].usernameColor, msg.text);
 				io.emit("chatMessage", msg);
-				chatMessages.push(msg.text);
+				chatMessages.push(msg);
 				if (chatMessages.length > 1000) {
 					chatMessages = chatMessages.slice(1, chatMessages.length - 1);
 				}
@@ -169,6 +175,9 @@ io.on("connection", (socket) => {
 			socket.emit("usernameResponse", registeredUsername);
 			io.emit("userListUpdate", getUsernames());
 		});
+
+	// Send chat log
+	socket.emit("chatLogUpdate", chatMessages);
 
 	// Unregister on disconnect
 	socket.on("disconnect",

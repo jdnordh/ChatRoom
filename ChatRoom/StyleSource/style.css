@@ -24,6 +24,9 @@ ul {
 	padding: 0;
 	margin: 0;
 	list-style-type: none;
+	overflow-y: scroll;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .heading {
@@ -74,24 +77,34 @@ ul {
 .grid-column-1 {
 	grid-column-start: 1;
 	grid-column-end: 2;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .grid-column-2 {
 	grid-column-start: 2;
 	grid-column-end: 3;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .grid-row-1 {
 	grid-row-start: 1;
 	grid-row-end: 2;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .grid-row-2 {
 	grid-row-start: 2;
 	grid-row-end: 3;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .grid-row-3 {
 	grid-row-start: 3;
 	grid-row-end: 4;
+	max-height: 100%;
+	max-width: 100%;
 }

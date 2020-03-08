@@ -21,6 +21,7 @@ $(function() {
 				msg.text = "<b>" + msg.text + "</b>";
 			}
 			$("#messagelog").append($("<li>").html(msg.text));
+			scrollToBottom();
 		});
 
 	socket.on("usernameResponse",
@@ -39,7 +40,14 @@ $(function() {
 
 	socket.on("chatLogUpdate", (chatLogs) =>
 	{
-
+		for (var i = 0; i < chatLogs.length; ++i) {
+			var msg = chatLogs[i];
+			if (msg.username === g_username) {
+				msg.text = "<b>" + msg.text + "</b>";
+			}
+			$("#messagelog").append($("<li>").html(msg.text));
+		}
+		scrollToBottom();
 	});
 
 	socket.emit("usernameRequest", g_username);
@@ -55,5 +63,8 @@ $(function() {
 		(e) => {
 			submit();
 		});
-		
+
+	function scrollToBottom() {
+		$("#messagelog").animate({ scrollTop: $("#messagelog").prop("scrollHeight") }, 750);
+	}
 });
