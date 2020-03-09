@@ -84,6 +84,8 @@ dist
 
 # VS Files
 .vs/
+bin
+obj
 
 # Gatsby files
 .cache/
