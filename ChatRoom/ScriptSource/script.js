@@ -1,8 +1,11 @@
+"use strict"
 
 var g_username = "";
 
 $(function() {
 	var socket = io();
+	g_username = readUsernameCookie();
+	console.log("Read username cookie: " + g_username);
 
 	var submit = () => {
 		var text = $("#message").val();
@@ -26,7 +29,11 @@ $(function() {
 
 	socket.on("usernameResponse",
 		(username) => {
+			removeUsernameCookie();
+			console.log("Removed username cookie");
+			createUsernameCookie(username);
 			g_username = username;
+			console.log("Added username cookie: " + g_username);
 			$("#username").text("You are " + username);
 		});
 
@@ -67,4 +74,38 @@ $(function() {
 	function scrollToBottom() {
 		$("#messagelog").animate({ scrollTop: $("#messagelog").prop("scrollHeight") }, 750);
 	}
+
 });
+
+// For the following functions I used https://stackoverflow.com/questions/7215547/how-to-update-and-delete-a-cookie for reference
+
+function createUsernameCookie(username, days = 12) {
+	var expires;
+	if (days) {
+		var d = new Date();
+		d.setTime(days * 86400000 + d.getTime());
+		expires = "; expires=" + d.toGMTString();
+	} else {
+		expires = "";
+	}
+	document.cookie = "username=" + username + expires + "; path=/";
+}
+
+function readUsernameCookie() {
+	var cookieName = "username=";
+	var cookieArray = document.cookie.split(";");
+	for (var i = 0; i < cookieArray.length; ++i) {
+		var cookie = cookieArray[i];
+		while (cookie.charAt(0) === " ") {
+			cookie = cookie.substring(1, cookie.length);
+		}
+		if (cookie.indexOf(cookieName) === 0) {
+			return cookie.substring(cookieName.length, cookie.length);
+		}
+	}
+	return null;
+}
+
+function removeUsernameCookie() {
+	createUsernameCookie("", -1);
+}

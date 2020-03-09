@@ -1,10 +1,9 @@
 "use strict";
 
-var app = require("express")();
+var express = require("express");
+var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
-var cookieParser = require("cookie-parser");
-app.use(cookieParser);
 
 var htmlSourceDir = "/HtmlSource";
 var scriptSourceDir = "/ScriptSource";
@@ -12,10 +11,6 @@ var styleSourceDir = "/StyleSource";
 
 app.get("/",
 	(req, res) => {
-		// Do cookies here
-		//var requestedUsername = req.cookies["username"];
-
-		//res.cookie("username", "name");
 		res.sendFile(__dirname + htmlSourceDir + "/app.html");
 	});
 
@@ -155,10 +150,9 @@ io.on("connection", (socket) => {
 				if (safeUsername.length > 64) {
 					safeUsername = safeUsername.substring(0, 63);
 				}
-
 				// Check if username is available
 				if (usernameIsAvailable(safeUsername)) {
-					registerUsername(safeUsername);
+					registerUsername(safeUsername, socket);
 					registeredUsername = safeUsername;
 				}
 			}
@@ -186,10 +180,10 @@ io.on("connection", (socket) => {
 			for (var i = 0; i < keys.length; ++i) {
 				if (userDictionary[keys[i]].socketId === socket.id) {
 					unregisterUsername(userDictionary[keys[i]].username);
+					io.emit("userListUpdate", getUsernames());
 					return;
 				}
 			}
-			io.emit("userListUpdate", getUsernames());
 		});
 });
 
