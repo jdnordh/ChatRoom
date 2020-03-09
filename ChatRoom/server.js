@@ -43,7 +43,7 @@ var chatCommands = [
 				socket.emit("chatMessage", usage);
 				return;
 			}
-			var newUsername = groups[0];
+			var newUsername = makeStringAlphaNumeric(groups[0]);
 			if (newUsername.length > 64) {
 				newUsername = newUsername.substring(0, 63);
 			}
@@ -82,6 +82,7 @@ var chatCommands = [
 			var newColor = groups[0];
 			if (usernameIsRegistered(username)) {
 				userDictionary[username].usernameColor = newColor;
+				instanceIo.emit("userListUpdate", getUsernames());
 			}
 		}
 	},
@@ -89,7 +90,7 @@ var chatCommands = [
 		// Help command
 		regex: /^\/help/, handler: (instanceIo, socket, username, command) => {
 			// Send usage message
-			var msg = { text: formatMessageNoDate("Help", "888", "/nick [nickname] to change nickname\n/nickcolor [RRGGBB] to change nickname color\n/help to see this message") };
+			var msg = { text: formatMessageNoDate("Help", "888", "<p>/nick [nickname] to change nickname</p><p>/nickcolor [RRGGBB] to change nickname color</p><p>/help to see this message</p>") };
 			socket.emit("chatMessage", msg);
 		}
 	}];
@@ -239,6 +240,12 @@ function unregisterUsername(username) {
 // Removes any html tags from a string
 function makeStringSafe(string) {
 	return string.replace(/<\/?.+?>/gm, "");
+}
+
+// Removes all non-alphanumeric characters
+function makeStringAlphaNumeric(string) {
+	string = string.replace(/\s+/gm, " ");
+	return string.replace(/\W/gmi, "");
 }
 
 // Formats a message for the chat
