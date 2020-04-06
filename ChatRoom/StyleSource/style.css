@@ -1,0 +1,114 @@
+
+html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	font-family: 'Spartan';
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	overflow-y: scroll;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.heading {
+	font-size: 2vw;
+	font-weight: bold;
+	margin-top: 10px;
+}
+@media screen and (max-width: 600px) {
+	.heading {
+		font-size: 20px;
+	}
+}
+
+.text-log {
+	border-radius: 5px;
+	border: #222 1px solid;
+	max-width: 100%;
+}
+
+.text-log li {
+	word-wrap: break-word;
+	padding: 5px 10px;
+}
+
+.text-log li:nth-child(odd) {
+	background: #eee;
+}
+
+#message {
+	border-radius: 5px;
+	border: #222 1px solid;
+	font-size: 2vw;
+	padding: 5px;
+}
+
+#send {
+	border-radius: 5px;
+	border: #222 1px solid;
+	height: 100%;
+}
+
+.grid-base {
+	display: grid;
+	margin: 10px;
+	grid-template-columns: 3fr 1fr;
+	grid-template-rows: 1fr 20fr 1fr;
+	grid-gap: 10px;
+	width: calc(100% - 20px);
+	height: calc(100% - 20px);
+}
+
+.grid-column-1 {
+	grid-column-start: 1;
+	grid-column-end: 2;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.grid-column-2 {
+	grid-column-start: 2;
+	grid-column-end: 3;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.grid-row-1 {
+	grid-row-start: 1;
+	grid-row-end: 2;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.grid-row-2 {
+	grid-row-start: 2;
+	grid-row-end: 3;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.grid-row-3 {
+	grid-row-start: 3;
+	grid-row-end: 4;
+	max-height: 100%;
+	max-width: 100%;
+}
